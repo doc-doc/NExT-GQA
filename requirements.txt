@@ -1,0 +1,16 @@
+h5py==3.9.0
+hostlist==1.4.8
+huggingface-hub==0.16.4
+numpy==1.22.0
+pandas==1.4.1
+Pillow==9.3.0
+python-dateutil==2.8.2
+PyYAML==6.0
+scikit-learn==1.0.2
+scipy==1.8.0
+sentencepiece==0.1.96
+tokenizers==0.11.6
+torch==1.8.1
+torchvision==0.9.1
+tqdm==4.63.1
+transformers==4.17.0

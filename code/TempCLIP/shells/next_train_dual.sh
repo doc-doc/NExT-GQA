@@ -1,0 +1,27 @@
+GPU=$1
+CUDA_VISIBLE_DEVICES=$GPU python main_dual.py --checkpoint_dir=nextgqa \
+	--dataset=nextgqa \
+	--mc=5 \
+	--test='train' \
+	--feat_type='CLIPL' \
+	--epochs=30 \
+	--lr=0.00001 \
+	--qmax_words=30 \
+	--amax_words=38 \
+	--max_feats=32 \
+	--batch_size=64 \
+	--batch_size_val=64 \
+	--num_thread_reader=4 \
+	--embd_dim=768 \
+	--ff_dim=768 \
+	--dropout=0.3 \
+	--seed=666 \
+	--baseline="NG+" \
+	--lan='RoBERTa' \
+	--n_layers=1 \
+	--vg_loss=1 \
+	--prop_num=1 \
+	--sigma=9 \
+	--div_loss=0 \
+	--save_dir='../../../data/gmodels/NG+/TempCLIP_PT/' \
+	# --pretrain_path='../../../data/gmodels/NG+/TempCLIP_PT/best_model.pth'
