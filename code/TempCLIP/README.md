@@ -6,7 +6,7 @@ TempCLIP follows the dual-style architecture and encodes each frame into a globa
 </div>
 
 ## Preparation
-Please download and extract the <a href="https://drive.google.com/file/d/1OOIVRN7dxd_2P0TfMR4bQSS6vyS34_hh/view?usp=drive_link">checkpoint</a> file into ```workspace/data/gmodels/NG+/```. 
+Please download and extract the <a href="https://drive.google.com/file/d/1OOIVRN7dxd_2P0TfMR4bQSS6vyS34_hh/view?usp=drive_link">checkpoint</a> file into ```workspace/data/gmodels/NG+/TempCLIP/```. 
 
 ## Inference
 ```
