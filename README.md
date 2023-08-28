@@ -20,35 +20,12 @@ Assume you have installed Anaconda, please do the following to setup the environ
 ## Preparation
 Please create a data folder outside this repo, so you have two folders in your workspace 'workspace/data/' and 'workspace/NExT-GQA/'. 
 
-Please download the related <a href="https://drive.google.com/file/d/101W4r6ibXJE2IOr6MINbNIMC3MFiN-us/view?usp=drive_link">video feature</a> or <a href="https://drive.google.com/file/d/1jTcRCrVHS66ckOUfWRb-rXdzJ52XAWQH/view">raw videos</a>. Extract the feature into ```workspace/data/nextqa/``` and <a href="https://drive.google.com/file/d/1OOIVRN7dxd_2P0TfMR4bQSS6vyS34_hh/view?usp=drive_link">checkpoint</a> files into ```workspace/data/gmodels/NG+/```. If you download the raw videos, you need to decode each video at 6fps and then extract the frame feature of CLIP via the script provided in ```code/TempCLIP/tools/extract_feat.sh```.
+Please download the related <a href="https://drive.google.com/file/d/101W4r6ibXJE2IOr6MINbNIMC3MFiN-us/view?usp=drive_link">video feature</a> or <a href="https://drive.google.com/file/d/1jTcRCrVHS66ckOUfWRb-rXdzJ52XAWQH/view">raw videos</a>. Extract the feature into ```workspace/data/nextqa/``` and checkpoint files into ```workspace/data/gmodels/```. If you download the raw videos, you need to decode each video at 6fps and then extract the frame feature of CLIP via the script provided in ```code/TempCLIP/tools/extract_feat.sh```.
 
-## Inference
-```
-./shell/next_test_dual.sh 0
-```
-## Evaluation
-QA
-```
-python eval_next.py --folder TempCLIP --mode test
-```
-GroundedQA 
-```
-python eval_ground.py
-``` 
 ## Result Visualization (NExT-GQA)
 <div align="center">
   <img width="70%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/res.png">
 </div>
-
-## Train
-We have provided all the scripts in the folder 'shells', you can start your training by specifying the GPU IDs behind the script. (If you have multiple GPUs, you can separate them with comma: ./shell/nextqa_train.sh 0,1)
-```
-./shell/nextqa_train_dual.sh 0
-```
-It will train the model and save to the folder 'workspace/data/gmodels/'
-
-## TODO
-[ ] Release FrozenGQA.
 
 ## Citation 
 ```
