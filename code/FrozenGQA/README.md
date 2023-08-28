@@ -3,7 +3,7 @@ This repo holds <a href="https://github.com/antoyang/FrozenBiLM">FrozenBiLM</a> 
 </details>
 
 <div align="center">
-  <img width="80%" alt="Visually Grounded VideoQA" src="./misc/NExT-GQA.png">
+  <img width="100%" alt="Visually Grounded VideoQA" src="../../misc/NExT-GQA.png">
 </div>
 
 ## Preparation
