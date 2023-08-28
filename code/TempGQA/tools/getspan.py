@@ -117,7 +117,7 @@ def generate_ground(pred_file, seg_file, ground_file, qa_file):
 
 def main(data_dir, dset):
 
-    anno_dir = '../../datasets/nextgqa/'
+    anno_dir = '../../../datasets/nextgqa/'
     seg_file = f'{anno_dir}/frame2time_{dset}.json'
     qa_file = f'{anno_dir}/{dset}.csv'
     pred_file = f'{data_dir}/{dset}_ground_att.json'
@@ -127,8 +127,8 @@ def main(data_dir, dset):
 
 
 if __name__ == "__main__":
-    # data_dir = '../../../data/gmodels/nextgqa/NG+/FBLM/'
-    data_dir = '../../../data/gmodels/NG+/TempCLIP/'
+    # data_dir = '../../../../data/gmodels/NG+/FrozenGQA/'
+    data_dir = '../../../../data/gmodels/NG+/TempCLIP/'
     dset = 'test'
     main(data_dir, dset)
     
