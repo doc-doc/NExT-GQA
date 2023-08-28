@@ -26,7 +26,7 @@ Please follow the instructions in ```code``` for train and test the respective m
 
 ## Result Visualization (NExT-GQA)
 <div align="center">
-  <img width="100%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/res.png">
+  <img width="90%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/res.png">
 </div>
 
 ## Citation 
