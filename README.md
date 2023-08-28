@@ -5,7 +5,7 @@ We study visually grounded VideoQA by forcing vision-language models (VLMs) to a
 </details>
 
 <div align="center">
-  <img width="80%" alt="Visually Grounded VideoQA" src="./misc/NExT-GQA.png">
+  <img width="100%" alt="Visually Grounded VideoQA" src="./misc/NExT-GQA.png">
 </div>
 
 ## Environment
@@ -24,7 +24,7 @@ Please download the related <a href="https://drive.google.com/file/d/101W4r6ibXJ
 
 ## Result Visualization (NExT-GQA)
 <div align="center">
-  <img width="70%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/res.png">
+  <img width="100%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/res.png">
 </div>
 
 ## Citation 
