@@ -13,6 +13,6 @@
 
 ## Visualization
 <div align="center">
-  <img width="100%" alt="NExT-GQA for visually-grounded VideoQA" src="../misc/data-exp.png">
+  <img width="100%" alt="NExT-GQA for visually-grounded VideoQA" src="../../misc/data-exp.png">
 </div>
 
