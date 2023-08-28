@@ -1,7 +1,7 @@
 # Can I Trust Your Answer? Towards Visually Grounded Video Question Answering
 <details open>
 <summary> <b>Introduction</b> </summary>
-We study visually grounded VideoQA by forcing vision-language models (VLMs) to answer questions and simultaneously ground the relevant video moments as visual evidence. We constructed the NExT-GQA dataset by extending the QA annotations in NExT-QA with corresponding time-span annotations. With NExT-GQA, we examine a variety of VLMs and find that they excel at question-answering but their answers are hardly grounded on the relevant video content. As a pioneer remedy, we propose a Gaussian mask learning strategy and demonstrate its effectiveness across different backbones for both video grounding and QA.
+We study visually grounded VideoQA by forcing vision-language models (VLMs) to answer questions and simultaneously ground the relevant video moments as visual evidence. We constructed the NExT-GQA dataset by extending the QA annotations in NExT-QA with corresponding time-span annotations. With NExT-GQA, we examine a variety of VLMs and find that they excel at QA but are weak in grounding the visual evidence. As a remedy, we further explore and suggest a Gaussian mask learning strategy and demonstrate its effectiveness across different backbones for both video grounding and QA.
 </details>
 
 <div align="center">
