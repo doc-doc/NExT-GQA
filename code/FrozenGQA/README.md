@@ -7,10 +7,10 @@ This repo holds <a href="https://github.com/antoyang/FrozenBiLM">FrozenBiLM</a> 
 </div>
 
 ## Preparation
-FrozenBiLM relies on pretrained <a href="https://huggingface.co/microsoft/deberta-v2-xlarge">DeBerta-V2-XL</a>, you need to download it from hugging face via:
+FrozenBiLM relies on pretrained <a href="https://huggingface.co/microsoft/deberta-v2-xlarge">DeBERTa-V2-XL</a>, you need to download it from hugging face via:
 ```
->cd workspace/data/pretrain_models
->git clone https://huggingface.co/microsoft/deberta-v2-xlarge
+cd workspace/data/pretrain_models
+git clone https://huggingface.co/microsoft/deberta-v2-xlarge
 ```
 Additionally, you need to download the <a href="https://drive.google.com/file/d/1-_mUTxSjQj-NZ-le0-mDUftaikB_2nsU/view">cross-modal pretrained weights </a> from FrozenBiLM, and put it into ```workspace/data/pretrain_models/```.
 
@@ -31,6 +31,7 @@ It will train the model and save to the folder 'workspace/data/gmodels/'
 <div align="center">
   <img width="100%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/app-res.png">
 </div>
+
 ## Citation 
 ```
 @inproceedings{xiao2023nextgqa,
