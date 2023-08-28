@@ -1,6 +1,6 @@
-<b>train.csv</b>: QA annotations that are equal to nextqa train.csv. Note that we have replaced the correct answer_id with the corresponding text answer.
+<b>train.csv</b>: QA annotations that are equal to <a href="https://github.com/doc-doc/NExT-QA">NExT-QA</a> train.csv. Note that we have replaced the correct answer_id with the corresponding text answer.
 
-<b>test.csv/val.csv</b>: QA annotations that are subset of nextqa test.csv/val.csv. We exclude the questions that rely on global video content and those in the descriptive group.
+<b>test.csv/val.csv</b>: QA annotations that are subset of NExT-QA test.csv/val.csv. We exclude the questions that rely on global video content and those in the descriptive group.
 
 <b>gsub_test.json/gsub_val.json</b>: time span annotations corresponding to the QAs in test.csv/val.csv
 
