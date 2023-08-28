@@ -23,7 +23,7 @@ python eval_ground.py
 ``` 
 ## Result Visualization (NExT-GQA)
 <div align="center">
-  <img width="70%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/res.png">
+  <img width="100%" alt="NExT-GQA for visually-grounded VideoQA" src="./misc/app-res.png">
 </div>
 
 ## Train
