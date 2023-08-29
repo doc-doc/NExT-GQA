@@ -1,5 +1,5 @@
 ## Instructions
-<b>train.csv</b>: QA annotations that are equal to <a href="https://github.com/doc-doc/NExT-QA">NExT-QA</a> train.csv. Note that we have replaced the correct answer_id with the corresponding text answer.
+<b>train.csv</b>: QA annotations are identical to <a href="https://github.com/doc-doc/NExT-QA">NExT-QA</a> train.csv, except that we have replaced the correct answer_id with the corresponding text answer.
 
 <b>test.csv/val.csv</b>: QA annotations that are subset of NExT-QA test.csv/val.csv. We exclude the questions that rely on global video content and those in the descriptive group.
 
