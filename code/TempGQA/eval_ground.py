@@ -144,7 +144,7 @@ def main(res_dir, filename, gs=False):
 
 
 if __name__ == "__main__":
-    # res_dir = '../../../data/gmodels/NG+/FrozenGQA/'
-    res_dir = '../../../data/gmodels/NG+/TempCLIP/'
+    res_dir = '../../../data/gmodels/NG+/FrozenGQA/'
+    # res_dir = '../../../data/gmodels/NG+/TempCLIP/'
     filename = 'test_ground_gs.json'
     main(res_dir, filename, gs=True)
