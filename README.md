@@ -1,4 +1,4 @@
-# Can I Trust Your Answer? Towards Visually Grounded Video Question Answering
+# Can I Trust Your Answer? Visually Grounded Video Question Answering
 <details open>
 <summary> <b>Introduction</b> </summary>
 This work aim to encourage the study on visually grounded VideoQA by forcing vision-language models (VLMs) to answer questions and simultaneously ground the relevant video moments as visual evidences. We reveal that this task is easy for human yet is extremely challenging for existing VLMs.
@@ -32,7 +32,7 @@ Please follow the instructions in ```code``` for train and test the respective m
 ## Citation 
 ```
 @inproceedings{xiao2023nextgqa,
-  title={Can I Trust Your Answer? Towards Visually Grounded Video Question Answering},
+  title={Can I Trust Your Answer? Visually Grounded Video Question Answering},
   author={Xiao, Junbin and Angela, Yao and Li, Yicong and Chua, Tat-Seng},
   booktitle={arXiv},
   pages={preprint},
