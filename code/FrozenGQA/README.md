@@ -35,7 +35,7 @@ It will train the model and save to the folder 'workspace/data/gmodels/'
 ## Citation 
 ```
 @inproceedings{xiao2023nextgqa,
-  title={Can I Trust Your Answer? Towards Visually Grounded Video Question Answering},
+  title={Can I Trust Your Answer? Visually Grounded Video Question Answering},
   author={Xiao, Junbin and Angela, Yao and Li, Yicong and Chua, Tat-Seng},
   booktitle={arXiv},
   pages={preprint},
