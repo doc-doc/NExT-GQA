@@ -14,7 +14,7 @@ git clone https://huggingface.co/microsoft/deberta-v2-xlarge
 ```
 If you encounter git lfs problem, please install via ```conda install git-lfs```. Additionally, you need to download the <a href="https://drive.google.com/file/d/1-_mUTxSjQj-NZ-le0-mDUftaikB_2nsU/view">cross-modal pretrained weights </a> from FrozenBiLM, and put it into ```workspace/data/pretrain_models/```.
 
-Finally, please download our fine-tuned <a href="https://drive.google.com/file/d/1ChVz-ao5hSe3HoJBI6vf1JFmHSPaDf8U/view?usp=drive_link">checkpoint</a> and extract it into ```workspace/data/gmodels/NG+/FrozenGQA/```. 
+Finally, please download our fine-tuned <a href="https://drive.google.com/file/d/1ChVz-ao5hSe3HoJBI6vf1JFmHSPaDf8U/view?usp=sharing">checkpoint</a> and extract it into ```workspace/data/gmodels/NG+/FrozenGQA/```. 
 ## Inference
 ```
 ./shell/next_test.sh 0
