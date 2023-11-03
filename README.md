@@ -1,7 +1,7 @@
 # <a href="https://arxiv.org/abs/2309.01327">Can I Trust Your Answer? Visually Grounded Video Question Answering</a>
 <details open>
 <summary> <b>Introduction</b> </summary>
-We study visually grounded VideoQA by forcing vision-language models (VLMs) to answer questions and simultaneously ground the relevant video moments as visual evidences. We reveal that this task is easy for human yet is extremely challenging for existing VLMs. We hope our data, analyses, and code can contribute towards the advancement in this area.
+We study visually grounded VideoQA by forcing vision-language models (VLMs) to answer questions and simultaneously ground the relevant video moments as visual evidences. We show that this task is easy for human yet is extremely challenging for existing VLMs, revealing that the strong QA performance of these models are actually derived from a short-cut learning of language correlation and irrelevant visual context instead of the causal visual evidence. By defining grounded VQA, we hope to discourage such short-cut learning and spark more trustworthy techniques. This repository hosts our data and code to facilitate future research.
 </details>
 
 <div align="center">
