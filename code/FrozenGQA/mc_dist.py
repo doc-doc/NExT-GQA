@@ -483,14 +483,14 @@ def main(args):
     else:
         dataloader_train = None
         
-        tuples.append(
-            nt(
-                dataset_name=dset_name,
-                dataloader_test=dataloader_test,
-                dataloader_val=dataloader_val,
-                dataloader_train=dataloader_train,
-            )
+    tuples.append(
+        nt(
+            dataset_name=dset_name,
+            dataloader_test=dataloader_test,
+            dataloader_val=dataloader_val,
+            dataloader_train=dataloader_train,
         )
+    )
 
     # Load pretrained checkpoint
     best_acc = 0
