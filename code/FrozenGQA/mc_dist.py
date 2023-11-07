@@ -390,15 +390,15 @@ def main(args):
         weight_decay=args.weight_decay,
     )
     
-    nt = namedtuple(
-        typename="data",
-        field_names=[
-            "dataset_name",
-            "dataloader_test",
-            "dataloader_val",
-            "dataloader_train",
-        ],
-    )
+    # nt = namedtuple(
+    #     typename="data",
+    #     field_names=[
+    #         "dataset_name",
+    #         "dataloader_test",
+    #         "dataloader_val",
+    #         "dataloader_train",
+    #     ],
+    # )
 
     tuples = []
     for dset_name in args.combine_datasets_val:
@@ -483,14 +483,14 @@ def main(args):
     else:
         dataloader_train = None
         
-    tuples.append(
-        nt(
-            dataset_name=dset_name,
-            dataloader_test=dataloader_test,
-            dataloader_val=dataloader_val,
-            dataloader_train=dataloader_train,
-        )
-    )
+    # tuples.append(
+    #     nt(
+    #         dataset_name=dset_name,
+    #         dataloader_test=dataloader_test,
+    #         dataloader_val=dataloader_val,
+    #         dataloader_train=dataloader_train,
+    #     )
+    # )
 
     # Load pretrained checkpoint
     best_acc = 0
@@ -503,117 +503,118 @@ def main(args):
             optimizer.load_state_dict(checkpoint["optimizer"])
             args.start_epoch = checkpoint["epoch"] + 1
             for i, item in enumerate(tuples):
-                print(f"Validating {item.dataset_name}")
+                print(f"Validating {dset_name}")
                 curr_val_stats, acc, att_gs = evaluate(
                     model=model,
                     tokenizer=tokenizer,
-                    data_loader=item.dataloader_val,
+                    data_loader=dataloader_val,
                     device=device,
-                    dataset_name=item.dataset_name,
+                    dataset_name=dset_name,
                     args=args,
                     split="val",
-                    type_map=item.dataloader_val.dataset.type_map,
+                    type_map=dataloader_val.dataset.type_map,
                 )
                 best_acc = acc
 
-    for i, item in enumerate(tuples):
-        if not args.test and not args.eval:
+    # for i, item in enumerate(tuples):
+    if not args.test and not args.eval:
+        if dist.is_main_process():
+            print("Start training")
+        start_time = time.time()
+        best_epoch = args.start_epoch
+        
+        for epoch in range(args.start_epoch, args.epochs):
             if dist.is_main_process():
-                print("Start training")
-            start_time = time.time()
-            best_epoch = args.start_epoch
-            
-            for epoch in range(args.start_epoch, args.epochs):
-                if dist.is_main_process():
-                    print(f"Starting epoch {epoch}")
-                if args.distributed:
-                    sampler_train.set_epoch(epoch)
-                train_stats = train_one_epoch(
+                print(f"Starting epoch {epoch}")
+            if args.distributed:
+                sampler_train.set_epoch(epoch)
+            train_stats = train_one_epoch(
+                model=model,
+                tokenizer=tokenizer,
+                data_loader=dataloader_train,
+                optimizer=optimizer,
+                device=device,
+                epoch=epoch,
+                args=args,
+                max_norm=args.clip_max_norm,
+            )
+
+            if (epoch + 1) % args.eval_skip == 0:
+                val_stats = {}
+                # for i, item in enumerate(tuples):
+                print(f"Validating {dset_name}")
+                curr_val_stats, acc, att_gs = evaluate(
                     model=model,
                     tokenizer=tokenizer,
-                    data_loader=item.dataloader_train,
-                    optimizer=optimizer,
+                    data_loader=dataloader_val,
                     device=device,
-                    epoch=epoch,
+                    dataset_name=dset_name,
                     args=args,
-                    max_norm=args.clip_max_norm,
+                    split="val",
+                    type_map=dataloader_val.dataset.type_map,
                 )
+                val_stats[dset_name + "_acc"] = acc
+                if acc > best_acc:
+                    best_epoch = epoch
+                    best_acc = acc
 
-                if (epoch + 1) % args.eval_skip == 0:
-                    val_stats = {}
-                    for i, item in enumerate(tuples):
-                        print(f"Validating {item.dataset_name}")
-                        curr_val_stats, acc, att_gs = evaluate(
+                    if args.save_dir and dist.is_main_process():
+                        checkpoint_path = os.path.join(
+                            args.save_dir, f"best_model.pth"
+                        )
+                        dist.save_on_master(
+                            {
+                                "model": model.state_dict(),
+                                "optimizer": optimizer.state_dict(),
+                                "epoch": epoch,
+                                "args": args,
+                            },
+                            checkpoint_path,
+                        )
+                        json.dump(curr_val_stats,open(os.path.join(args.save_dir, "val-res.json",),"w"))
+                        json.dump(att_gs[0],open(os.path.join(args.save_dir,f"val_ground_att.json"),"w"))
+                        json.dump(att_gs[1],open(os.path.join(args.save_dir,f"val_ground_gs.json"),"w"))
+                    
+                    if args.test:
+                        results_test, acc_test, att_gs_test = evaluate(
                             model=model,
                             tokenizer=tokenizer,
-                            data_loader=item.dataloader_val,
+                            data_loader=dataloader_test,
                             device=device,
-                            dataset_name=item.dataset_name,
+                            dataset_name=dset_name,
                             args=args,
-                            split="val",
-                            type_map=item.dataloader_val.dataset.type_map,
+                            type_map=dataloader_test.dataset.type_map,
+                            split="test",
                         )
-                        val_stats[item.dataset_name + "_acc"] = acc
-                        if acc > best_acc:
-                            best_epoch = epoch
-                            best_acc = acc
+                        att_test, gs_test = att_gs_test[0], att_gs_test[1]
+                        if args.save_dir and dist.is_main_process():
+                            json.dump(results_test, open(os.path.join(args.save_dir, "test-res.json"),"w"))
+                            json.dump(att_test, open(os.path.join(args.save_dir, "test_ground_att.json"), "w"))
+                            json.dump(gs_test, open(os.path.join(args.save_dir, "test_ground_gs.json"),"w"))
 
-                            if args.save_dir and dist.is_main_process():
-                                checkpoint_path = os.path.join(
-                                    args.save_dir, f"best_model.pth"
-                                )
-                                dist.save_on_master(
-                                    {
-                                        "model": model.state_dict(),
-                                        "optimizer": optimizer.state_dict(),
-                                        "epoch": epoch,
-                                        "args": args,
-                                    },
-                                    checkpoint_path,
-                                )
-                                json.dump(curr_val_stats,open(os.path.join(args.save_dir, "val-res.json",),"w"))
-                                json.dump(att_gs[0],open(os.path.join(args.save_dir,f"val_ground_att.json"),"w"))
-                                json.dump(att_gs[1],open(os.path.join(args.save_dir,f"val_ground_gs.json"),"w"))
-                            
-                            results_test, acc_test, att_gs_test = evaluate(
-                                model=model,
-                                tokenizer=tokenizer,
-                                data_loader=item.dataloader_test,
-                                device=device,
-                                dataset_name=item.dataset_name,
-                                args=args,
-                                type_map=item.dataloader_test.dataset.type_map,
-                                split="test",
-                            )
-                            att_test, gs_test = att_gs_test[0], att_gs_test[1]
-                            if args.save_dir and dist.is_main_process():
-                                json.dump(results_test, open(os.path.join(args.save_dir, "test-res.json"),"w"))
-                                json.dump(att_test, open(os.path.join(args.save_dir, "test_ground_att.json"), "w"))
-                                json.dump(gs_test, open(os.path.join(args.save_dir, "test_ground_gs.json"),"w"))
+            else:
+                val_stats = {}
 
-                else:
-                    val_stats = {}
+            log_stats = {
+                **{f"train_{k}": v for k, v in train_stats.items()},
+                **{f"val_{k}": v for k, v in val_stats.items()},
+                "epoch": epoch,
+                "n_parameters": n_parameters,
+            }
 
-                log_stats = {
-                    **{f"train_{k}": v for k, v in train_stats.items()},
-                    **{f"val_{k}": v for k, v in val_stats.items()},
-                    "epoch": epoch,
-                    "n_parameters": n_parameters,
-                }
-
-                if args.save_dir and dist.is_main_process():
-                    with open(os.path.join(args.save_dir, "log.txt"), "a") as f:
-                        f.write(json.dumps(log_stats) + "\n")
-                    # checkpoint_path = os.path.join(args.save_dir, f"ckpt.pth")
-                    # dist.save_on_master(
-                    #     {
-                    #         "model": model.state_dict(),
-                    #         "optimizer": optimizer.state_dict(),
-                    #         "epoch": epoch,
-                    #         "args": args,
-                    #     },
-                    #     checkpoint_path,
-                    # )
+            if args.save_dir and dist.is_main_process():
+                with open(os.path.join(args.save_dir, "log.txt"), "a") as f:
+                    f.write(json.dumps(log_stats) + "\n")
+                # checkpoint_path = os.path.join(args.save_dir, f"ckpt.pth")
+                # dist.save_on_master(
+                #     {
+                #         "model": model.state_dict(),
+                #         "optimizer": optimizer.state_dict(),
+                #         "epoch": epoch,
+                #         "args": args,
+                #     },
+                #     checkpoint_path,
+                # )
 
             total_time = time.time() - start_time
             total_time_str = str(datetime.timedelta(seconds=int(total_time)))
@@ -629,31 +630,31 @@ def main(args):
             #     )
             #     model.load_state_dict(checkpoint["model"], strict=False)
 
-        start = time.time()
-        results, acc, att_gs = evaluate(
-            model=model,
-            tokenizer=tokenizer,
-            data_loader=item.dataloader_test if (args.test and not args.eval) else item.dataloader_val,
-            device=device,
-            dataset_name=item.dataset_name,
-            args=args,
-            type_map=item.dataloader_test.dataset.type_map if (args.test and not args.eval) else item.dataloader_val.dataset.type_map,
-            split="test" if (args.test and not args.eval) else "val",
-        )
-        eval_time = time.time() - start
-        total_time_str = str(datetime.timedelta(seconds=int(eval_time)))
-        print("Training time {}".format(total_time_str))
-        
-        att, gs = att_gs[0], att_gs[1]
-        if args.save_dir and dist.is_main_process():
-            json.dump(results, open(os.path.join(args.save_dir, "val-res.json" if 
-                (args.eval and not args.test) else "test-res.json"),"w"))
+    start = time.time()
+    results, acc, att_gs = evaluate(
+        model=model,
+        tokenizer=tokenizer,
+        data_loader=dataloader_test if (args.test and not args.eval) else dataloader_val,
+        device=device,
+        dataset_name=dset_name,
+        args=args,
+        type_map=dataloader_test.dataset.type_map if (args.test and not args.eval) else dataloader_val.dataset.type_map,
+        split="test" if (args.test and not args.eval) else "val",
+    )
+    eval_time = time.time() - start
+    total_time_str = str(datetime.timedelta(seconds=int(eval_time)))
+    print("Training time {}".format(total_time_str))
+    
+    att, gs = att_gs[0], att_gs[1]
+    if args.save_dir and dist.is_main_process():
+        json.dump(results, open(os.path.join(args.save_dir, "val-res.json" if 
+            (args.eval and not args.test) else "test-res.json"),"w"))
 
-            json.dump(att, open(os.path.join(args.save_dir, "val_ground_att.json"
-                        if (args.eval and not args.test) else "test_ground_att.json"), "w"))
+        json.dump(att, open(os.path.join(args.save_dir, "val_ground_att.json"
+                    if (args.eval and not args.test) else "test_ground_att.json"), "w"))
 
-            json.dump(gs, open(os.path.join(args.save_dir, "val_ground_gs.json" 
-                if (args.eval and not args.test) else "test_ground_gs.json"),"w"))
+        json.dump(gs, open(os.path.join(args.save_dir, "val_ground_gs.json" 
+            if (args.eval and not args.test) else "test_ground_gs.json"),"w"))
 
 
 if __name__ == "__main__":
@@ -663,6 +664,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.save_dir:
         args.save_dir = os.path.join(args.presave_dir, args.save_dir)
-    # 
+
     args.model_name = os.path.join(os.environ["TRANSFORMERS_CACHE"], args.model_name)
     main(args)
