@@ -17,8 +17,8 @@ from loss import LogSoftmax
 from util import compute_a2v, save_to
 from dataloader.vqa_loader import get_videoqa_loaders
 from train.trainval_gdqa import train, eval
-# uncomment in stage-1 pretrain
-from train.trainval_warm import train, eval
+# uncomment below in stage-1 pretrain
+# from train.trainval_warm import train, eval
 
 
 def main(args):
