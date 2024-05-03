@@ -4,6 +4,22 @@
 <b>test.csv/val.csv</b>: QA annotations that are subset of NExT-QA test.csv/val.csv. We exclude the questions that rely on global video content and those in the descriptive group.
 
 <b>gsub_test.json/gsub_val.json</b>: time span annotations corresponding to the QAs in test.csv/val.csv
+Note：
+```
+{"10001787725": #video_id
+    {
+      "duration": 34, #Video duration (s)
+      "location": #Segment
+        {
+          "1": [[1.2, 5.8]], #Segment corresponding to question id qid 1
+          "3": [[12.1, 17.1], [20.0, 23.5], [29.7, 33.2]] #Segment corresponding to question id qid 3
+          ...
+        },
+      fps: 29.97 #frame rate
+    }
+...
+}
+```
 
 <b>frame2time_test.json/frame2time_val.json</b>: map the frame id into time seconds.
 
