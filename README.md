@@ -31,11 +31,11 @@ Please follow the instructions in ```code``` for training and testing the respec
 
 ## Citation 
 ```
-@inproceedings{xiao2023nextgqa,
-  title={Can I Trust Your Answer? Visually Grounded Video Question Answering},
-  author={Xiao, Junbin and Angela, Yao and Li, Yicong and Chua, Tat-Seng},
-  booktitle={arXiv},
-  pages={preprint},
-  year={2023},
+@inproceedings{xiao2024can,
+  title={Can i trust your answer? visually grounded video question answering},
+  author={Xiao, Junbin and Yao, Angela and Li, Yicong and Chua, Tat-Seng},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={13204--13214},
+  year={2024}
 }
 ```
